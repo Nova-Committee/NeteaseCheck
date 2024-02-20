@@ -3,10 +3,23 @@ package committee.nova.neteasecheck;
 @SuppressWarnings("unused")
 public class NeteaseCheck {
     public static void check() {
-        try {
-            Class.forName("com.netease.mc.mod.network.common.Library");
-            throw new PlatformNotAuthorizedError();
-        } catch (ClassNotFoundException ignored) {
+        discoverClass(
+                // 1.16+
+                "com.netease.mc.mod.NeteaseOfficialMod",
+                // 1.7.10-1.12.2
+                "com.netease.mc.mod.mcbase.McBaseMod",
+                // 1.12.2
+                "com.netease.mc.mod.network.common.Library"
+        );
+    }
+
+    private static void discoverClass(String... names) {
+        for (final String className : names) {
+            try {
+                Class.forName(className);
+                throw new PlatformNotAuthorizedError();
+            } catch (ClassNotFoundException ignored) {
+            }
         }
     }
 
