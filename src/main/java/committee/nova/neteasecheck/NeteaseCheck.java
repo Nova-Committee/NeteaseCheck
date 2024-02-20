@@ -16,7 +16,7 @@ public class NeteaseCheck {
     private static void discoverClass(String... names) {
         for (final String className : names) {
             try {
-                Class.forName(className);
+                Class.forName(className, false, NeteaseCheck.class.getClassLoader());
                 throw new PlatformNotAuthorizedError();
             } catch (ClassNotFoundException ignored) {
             }
